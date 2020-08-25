@@ -30,8 +30,8 @@ if($resultado && $consulta->rowCount() == 1) {
   $_SESSION["usuario_logado"]=true;
 
   header("Location:../menu.php");
-
-} else {
+} 
+  else {
   header("Location: erro_login.php");
 }
 ?>
