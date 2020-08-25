@@ -7,7 +7,7 @@ include ('conexao.php');
 <html lang="pt-BR">
 
 <head>
-    <title>Login - BudhaStore</title>
+    <title>Login </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="image/caixinhas2.png" />
@@ -45,11 +45,11 @@ include ('conexao.php');
                     <span class="focus-input100" data-placeholder="Senha"></span>
                 </div>
 
-                <center> 
+                <!-- <center> 
                 <div class="input100" style="height: auto">
                     <input type="checkbox" name="remember" value="1" /> Lembrar minha senha
                 </div>
-                </center>
+                </center> -->
 
                 <div class="container-login100-form-btn" href="confirma_login.php">
                     <div class="wrap-login100-form-btn">
