@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>Projeto Webgelatel</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+    <script src="/Chart.bundle.js"></script>
+    <script src="/utils.js"></script>
+  </head>
+
+  <body>
+
+<!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
+<script type="text/javascript" src="/formden.js"></script>
+<!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="/bootstrap-iso.css" />
+
+<!--Font Awesome (added because you use icons in your prepend/append)-->
+<link rel="stylesheet" href="/font-awesome.min.css" />
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="/jquery-1.11.3.min.js"></script>
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="/bootstrap-datepicker3.css"/>
+
+<!-- Custom red buttom -->
+<style>
+  .button_red {
+
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  background-color: #e7e7e7; color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  .button_red:hover {
+  background-color: #f44336;
+  color: white;
+  }
+</style>
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="ava_1"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+      })
+
+    $(document).ready(function(){
+      var date_input=$('input[name="ava_2"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+function ocultarAvaliacao() {
+      var x = document.getElementById("avaliacao");
+      var y = document.getElementById("ocultar1").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarGoniometria() {
+      var x = document.getElementById("goniometria");
+      var y = document.getElementById("ocultar2").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarPreensao() {
+      var x = document.getElementById("preensao");
+      var y = document.getElementById("ocultar3").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarComposicao() {
+      var x = document.getElementById("composicao");
+      var y = document.getElementById("ocultar4").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarDor() {
+      var x = document.getElementById("dor");
+      var y = document.getElementById("ocultar5").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+      }
+
+      function ocultarEvolucaoDor() {
+      var x = document.getElementById("evolucaodor");
+      var y = document.getElementById("ocultar6").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarGuralnick() {
+      var x = document.getElementById("guralnick");
+      var y = document.getElementById("ocultar7").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarQualidade() {
+      var x = document.getElementById("qualidade");
+      var y = document.getElementById("ocultar8").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarForca() {
+      var x = document.getElementById("forca");
+      var y = document.getElementById("ocultar9").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+
+function ocultarPressao() {
+      var x = document.getElementById("pressao");
+      var y = document.getElementById("ocultar10").firstChild;
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.data="-";
+    } else {
+      x.style.display = "none";
+      y.data="+";
+    }
+}
+</script>
+
+<!-- Export to Excel -->
+<script src="FileSaver.js"></script>
+<script src="tableexport.js"></script>
+<script>
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+
+  //Nao exibe o conteudo dos campos
+function fnExcelReport()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('tabela'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++)
+    {
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+//    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+  //  tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    //tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus();
+        sa=txtArea1.document.execCommand("SaveAs",true,"ficha_utfpr.xls");
+    }
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+    return (sa);
+}
+</script>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Projeto Webgelatel</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+	  <form method="post" class="navbar-form navbar-right">
+	    <!--<button formaction="importar" class="btn btn-lg btn-primary btn-block" type="submit">Importar BD</button>-->
+	  </form>
+	</li>
+        <li>
+	  <form method="post" class="navbar-form navbar-right">
+	    <!--	<button formaction="excluirbase" class="btn btn-lg btn-primary btn-block" type="submit">Excluir BD</button>-->
+	  </form>
+	</li>
+        <li><a href="#">Perfil</a></li>
+        <li><a href="#">Ajuda</a></li>
+      </ul>
+      <form method="post" class="navbar-form navbar-right">
+	<!--            <input type="text" class="form-control" placeholder="Busca..."> -->
+	<button formaction="db" class="btn btn-lg btn-primary btn-block" type="submit">Exibir BD</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="/">Visão Geral<span class="sr-only">(current)</span></a></li>
+	<!--<li><a href="dashboard_lista">
+	    <form method="post">
+	      <button formaction="dashboard_lista" type="submit">Listar Fichas</button>
+	    </form>
+	  </a>
+	</li>-->
+	<li><a href="dashboard_analises">
+	    <form method="post">
+	      <button formaction="dashboard_analises" type="submit">Análises</button>
+	    </form>
+	  </a>
+	</li>
+		    <li><a href="dashboard_usuarios">
+		<form method="post">
+		  <button formaction="dashboard_usuarios" type="submit">Usuários</button>
+		</form>
+	      </a>
+	    </li>
+      </ul>
+    </div>
+
+    <!--
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <table>
+	<tr>
+	  <!--<td><img src="utfpr_logo.png"/></td>
+	</tr>
+	<tr>
+	  <td><button id="btnExport" onclick="tableToExcel('tabela', 'W3C Example Table')">Exportar para Excel</button></td>
+	</tr>
+      </table>
+    </div>
+     -->
+
+    <div id="avaliacao" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+      <table>
+	<tr>
+	  <td><img src="utfpr_logo.png"/></td>
+	</tr>
+	<tr>
+	  <td><button id="btnExport" onclick="tableToExcel('tabela', 'W3C Example Table')">Exportar para Excel</button></td>
+	</tr>
+      </table>
+
+      <table id="tabela" class="table table-striped" width="53%" border="0">
+	<tr>
+	  <td><h3 class="form-signin-heading">1. Avaliação</h3></td>
+	</tr>
+	<tr>
+	  <td>
+	    Número da Ficha:<span class="asteriskField">*</span>
+	  </td>
+	  <td>
+	    <p style="color: #f44336" th:text="${ava_0}"/>
+	    <!-- <input type="number" id="ava_0" name="ava_0" class="form-control" th:value="${ava_0}" required> -->
+	  </td>
+	  <td>
+		  <!-- <button formaction="abrir1" class="btn btn-lg btn-primary btn-block" type="submit">Abrir</button> -->
+	  </td>
+		<td width="15%">&nbsp;</td>
+		<td width="15%">&nbsp;</td>
+		<td width="2%">&nbsp;</td>
+		<td>
+		  <!-- <button formaction="remover1" class="button button_red" type="submit">Remover</button> -->
+		</td>
+	      </tr>
+
+	      <tr>
+		<td>
+		  <!-- Cada nome tem que ter um número unico: o CPF-->
+		  CPF (apenas números):
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${ava_cpf}"/>
+		  <!-- <input type="number" id="ava_cpf" name="ava_cpf" class="form-control" th:value="${ava_cpf}" autofocus> -->
+		</td>
+	      </tr>
+
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <p style="color: #f44336" th:text="${ava_1}"/>
+		      <!--<input class="form-control" id="ava_1" name="ava_1" th:value="${ava_1}" type="text"/>-->
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <p style="color: #f44336" th:text="${ava_2}"/>
+		      <!-- <input class="form-control" id="ava_2" name="ava_2" th:value="${ava_2}" type="text"/> -->
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <p style="color: #f44336" th:text="${ava_3}"/>
+		  <!-- <input type="number" id="ava_3" name="ava_3" class="form-control" th:value="${ava_3}" autofocus> -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>Nome:</td>
+		<td colspan="8">
+		  <p style="color: #f44336" th:text="${ava_4}"/>
+		  <!-- <input type="text" id="ava_4" name="ava_4" class="form-control" th:value="${ava_4}" autofocus> -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>Objetivo:</td>
+		<td colspan="8">
+		  <p style="color: #f44336" th:text="${ava_5}"/>
+		  <!-- <input type="text" id="ava_5" name="ava_5" class="form-control" th:value="${ava_5}" autofocus>		  -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>Exercícios resistidos há (meses):</td>
+		<td>
+		  <p style="color: #f44336" th:text="${ava_6}"/>
+		  <!-- <input type="number" id="ava_6" name="ava_6" class="form-control" th:value="${ava_6}" autofocus>		  -->
+		</td>
+		<td colspan="6">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Outras AF há (meses):</td>
+		<td>
+		  <p style="color: #f44336" th:text="${ava_7}"/>
+		  <!-- <input type="number" id="ava_7" name="ava_7" class="form-control" th:value="${ava_7}" autofocus>		  -->
+		</td>
+		<td>Especificar:</td>
+		<td colspan="6">
+		  <p style="color: #f44336" th:text="${ava_8}"/>
+		  <!-- <input type="text" id="ava_8" name="ava_8" class="form-control" th:value="${ava_8}" autofocus>		  -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>Diagnóstico:</td>
+		<td colspan="8">
+		  <p style="color: #f44336" th:text="${ava_9}"/>
+		  <!-- <input type="text" id="ava_9" name="ava_9" class="form-control" th:value="${ava_9}" autofocus>		  -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>Medicação:</td>
+		<td colspan="8">
+		  <p style="color: #f44336" th:text="${ava_10}"/>
+		  <!-- <input type="text" id="ava_10" name="ava_10" class="form-control" th:value="${ava_10}" autofocus>		  -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>Peso (Kg):</td>
+		<td>
+		  <p style="color: #f44336" th:text="${ava_11}"/>
+		  <!-- <input type="number" step="0.01" id="ava_11" name="ava_11" class="form-control" th:value="${ava_11}" autofocus> -->
+		</td>
+		<td>Altura(m):</td>
+		<td>
+		  <p style="color: #f44336" th:text="${ava_12}"/>
+		  <!-- <input type="number" step="0.01" id="ava_12" name="ava_12" class="form-control" th:value="${ava_12}" autofocus>     -->
+		</td>
+		<td>IMC:</td>
+		<td width="15%">
+		  <p style="color: #f44336" th:text="${ava_13}"/>
+		  <!-- <input type="number" step="0.01" id="ava_13" name="ava_13" class="form-control" th:value="${ava_13}" autofocus>  -->
+		</td>
+		<td width="5%">FC:</td>
+		<td>
+		  <p style="color: #f44336" th:text="${ava_14}"/>
+		  <!-- <input type="number" step="0.01" id="ava_14" name="ava_14" class="form-control" th:value="${ava_14}" autofocus>  -->
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+<!--		  <button formaction="gravar1" class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+		  <input type="hidden" id="ava_log" name="ava_log" value="LOG: " class="form-control" autofocus>
+-->
+		</td>
+		<td>
+		  <input type="hidden" id="ava_peso" name="ava_peso" th:value="${ava_peso}" class="form-control" autofocus>
+		  <!-- <p style="color: #f44336" th:text="${ava_peso}"/> -->
+		</td>
+	      </tr>
+<!--	      <tr>
+		<td colspan="8">
+		  <p style="color: #f44336" th:text="${ava_log}"/>
+		</td>
+	      </tr>
+-->
+	      <tr>
+		<td><h3 class="form-signin-heading">2. Goniometria</h3></td>
+	      </tr>
+
+	      <div id="goniometria" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	      <tr>
+		<td width="20%"><h4>Articulação</h4></td>
+		<td width="15%"><h4>Movimento</h4></td>
+		<td width="10%"><h4>Direito</h4></td>
+		<td width="10%"><h4>Esquerdo</h4></td>
+		<td width="10%"><h4>Dor</h4></td>
+		<td width="17%"><h4>Anatômico</h4></td>
+		<td><h4>Local da Dor</h4></td>
+	      </tr>
+	      <tr>
+		<td rowspan="2">Ombro</td>
+		<td>Flexão (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_1}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_2}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_3}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_4}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_5}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Rotação Externa (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_6}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_7}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_8}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_9}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_10}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td rowspan="2">Quadril</td>
+		<td>Flexão (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_11}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_12}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_13}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_14}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_15}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Rotação Externa (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_16}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_17}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_18}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_19}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_20}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Joelho</td>
+		<td>Flexão (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_21}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_22}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_23}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_24}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_25}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td rowspan="2">Tornozelo</td>
+		<td>Flexão Dorsal (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_26}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_27}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_28}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_29}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_30}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Flexão Plantar (&ordm;)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_31}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_32}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_33}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_34}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gonio_35}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Observação:</td>
+		<td colspan="6">
+		  <p style="color: #f44336" th:text="${gonio_36}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Sentar e levantar 30':</td>
+		<td colspan="6">
+		  <p style="color: #f44336" th:text="${gonio_37}"/>
+		</td>
+	      </tr>
+	      <tr>
+	      <tr>
+		<td>
+		  <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button> -->
+		</td>
+	      </tr>
+	      </div>
+	      <!-- -->
+
+	<div id="preensao" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	  <tr>
+	    <td colspan="8"><h3 class="form-signin-heading">3. Teste de Preensão Palmar</h3></td>
+	  </tr>
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td width="5%">&nbsp;</td>
+	    <td width="10%">Direito (Kg/força)</td>
+	    <td width="10%">Esquerdo (Kg/força)</td>
+	  </tr>
+	  <tr>
+	    <td width="10%">Lado Dominante</td>
+	    <td width="10%">
+	      <p style="color: #f44336" th:text="${preensao_1}"/>
+	    </td>
+	    <td>
+	      <p style="color: #f44336" th:text="${preensao_2}"/>
+	    </td>
+	    <td>
+	      <p style="color: #f44336" th:text="${preensao_3}"/>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td colspan="2" rowspan="2">&nbsp;</td>
+	    <td>
+	      <p style="color: #f44336" th:text="${preensao_4}"/>
+	    </td>
+	    <td>
+	      <p style="color: #f44336" th:text="${preensao_5}"/>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	      <p style="color: #f44336" th:text="${preensao_6}"/>
+	    </td>
+	    <td>
+	      <p style="color: #f44336" th:text="${preensao_7}"/>
+	    </td>
+	  </tr>
+	</div>
+
+	<div id="composicao" style="display: block" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <tr>
+	    <td colspan="8">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td colspan="8">
+	      <h3 class="form-signin-heading">4. Composição Corporal</h3>
+	    </td>
+	  </tr>
+
+	      <tr>
+		<td width="25%">Perimetria</td>
+		<td width="15%">&nbsp;</td>
+		<td width="15%">&nbsp;</td>
+		<td width="2%">&nbsp;</td>
+		<td width="15%">&nbsp;</td>
+		<td width="15%">&nbsp;</td>
+		<td width="15%">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>Direito</td>
+		<td>Esquerdo</td>
+		<td>&nbsp;</td>
+		<td>Professor</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_2}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Bra&ccedil;o</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_3}"/>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_4}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>Cintura</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_1}"/>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Panturrilha</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_6}"/>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_7}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>Quadril</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_5}"/>
+		</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Coxa</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_9}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_10}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>RQC</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_8}"/>
+		</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>M&eacute;dia Coxa</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_11}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_12}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Bia</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>%</td>
+		<td>Kg-l</td>
+	      </tr>
+	      <tr>
+		<td>Resist&ecirc;ncia (Ohms)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_13}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&Aacute;gua Corporal</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_15}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_15_2}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>React&acirc;ncia (Ohms)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_14}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>M. Magra</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_16}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_16_2}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&Acirc;ngulo de Fase (o)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_36}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>M. Gordura</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_17}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_17_2}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&Aacute;gua Intracelular</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_25}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_26}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&Aacute;gua Extracelular</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_27}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_28}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&Aacute;gua Corp&oacute;rea Total (ACT)</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_29}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_30}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td colspan="8">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td colspan="8">Níveis de Sarcopenia</td>
+	      </tr>
+              <tr>
+		<td>
+		  Sexo
+		</td>
+                <td>
+		  <p style="color: #f44336" th:text="${compo_31}"/>
+		</td>
+		</td>
+	      </tr>
+              <tr>
+		<td>
+		  Massa Muscular:
+		</td>
+                <td>
+		  <p style="color: #f44336" th:text="${compo_32}"/>
+		</td>
+	      </tr>
+              <tr>
+		<td>
+		  Altura:
+		</td>
+                <td>
+		  <p style="color: #f44336" th:text="${compo_33}"/>
+		</td>
+	      </tr>
+              <tr>
+		<td>
+		  Valor (Kg/m^2):
+		</td>
+                <td>
+		  <p style="color: #f44336" th:text="${compo_34}"/>
+		</td>
+	      </tr>
+              <tr>
+		<td>
+		  Status:
+		</td>
+                <td>
+		  <p style="color: #f44336" th:text="${compo_35}"/>
+		</td>
+	      </tr>
+<tr>
+  <td colspan="8">&nbsp;</td>
+</tr>
+	      <tr>
+		<td>Dobras Cut&acirc;neas</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Tr&iacute;ceps</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_19}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>Abd</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_22}"/>
+		</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Subes</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_20}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>Coxa</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_23}"/>
+		</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Supra</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_21}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>Total</td>
+		<td>
+		  <p style="color: #f44336" th:text="${compo_24}"/>
+		</td>
+		<td>&nbsp;</td>
+	      </tr>
+        </div>
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	  <tr>
+	    <td colspan="8">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td><h3 class="form-signin-heading">5. Avaliação de Dor</h3></td>
+	  </tr>
+
+	</div>
+	<!-- -->
+
+	<div id="dor" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_1}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_2}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_3}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_4}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_5}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_6}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_7}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_8}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_9}"/>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_10}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_11}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_12}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_13}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_14}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_15}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${dor_16}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Observação:</td>
+		<td colspan="6">
+		  <p style="color: #f44336" th:text="${dor_obs}"/>
+		</td>
+	      </tr>
+
+	</div>
+	<!-- -->
+
+
+		<!-- -->
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		  	  <tr>
+			    <td colspan="8">&nbsp;</td>
+			  </tr>
+	    <tr>
+	      <td><h3 class="form-signin-heading">6. Evolução da Dor</h3></td>
+	    </tr>
+	</div>
+	<!-- -->
+
+	<div id="evolucaodor" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_1}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_2}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_3}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_4}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_5}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_6}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_7}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_8}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_9}"/>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_10}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_11}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_12}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Local da dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+		<td>Local da Dor</td>
+		<td>Avalia&ccedil;&atilde;o da Dor</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_13}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_14}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_15}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${evolucaodor_16}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Observação:</td>
+		<td colspan="6">
+		  <p style="color: #f44336" th:text="${evolucaodor_obs}"/>
+		</td>
+	      </tr>
+
+	</div>
+	<!-- -->
+
+
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <tr>
+	    <td colspan="8">&nbsp;</td>
+	  </tr>
+	    <tr>
+	      <td><h3 class="form-signin-heading">7. Guralnick</h3></td>
+	    </tr>
+	</div>
+	<!-- -->
+
+	<div id="guralnick" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	      <tr>
+		<td width="19%">Equil&iacute;brio</td>
+		<td width="34%">&nbsp;</td>
+		<td width="23%">&nbsp;</td>
+		<td width="12%">&nbsp;</td>
+		<td width="7%">&nbsp;</td>
+		<td width="1%">&nbsp;</td>
+		<td width="1%">&nbsp;</td>
+		<td width="1%">&nbsp;</td>
+		<td width="2%">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>pp</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_1}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>pse</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_2}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>pe</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_3}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Levantar e Sentar</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_4}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_5}"/>
+		</td>
+		<td>Observação</td>
+		<td colspan="5">
+		  <p style="color: #f44336" th:text="${gural_6}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Velocidade</td>
+		<td> <div align="left">
+		    <p style="color: #f44336" th:text="${gural_7}"/>
+		</div></td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_8}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td colspan="5">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td><div align="right">Total</div></td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_9}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td colspan="5">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td><div align="left">TUG</div></td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_10}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td><div align="right">Observa&ccedil;&atilde;o</div></td>
+		<td colspan="5">
+		  <p style="color: #f44336" th:text="${gural_11}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Tempo</td>
+		<td>
+		  <p style="color: #f44336" th:text="${gural_12}"/>
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td colspan="5">&nbsp;</td>
+	      </tr>
+
+	</div>
+	<!-- -->
+
+	<div id="qualidade" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <tr>
+	    <td colspan="8">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td><h3 class="form-signin-heading">8. Qualidade de Vida</h3></td>
+	  </tr>
+	  <tr>
+	    <td colspan="3">Aspectos F&iacute;sicos: levantar-se, vertir-se, caminhar,
+	      subir escadas e etc....</td>
+	  </tr>
+	      <tr>
+		<td width="25%">&nbsp;</td>
+		<td width="21%">Atual</td>
+		<td width="16%">Anterior</td>
+	      </tr>
+	      <tr>
+		<td>1. Tem dificuldade ou limita&ccedil;&atilde;o, para realizar movimentos
+		  tipo: levantar-se, vertir-se, caminhar e subir escadas</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_1}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_2}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>2. Tem ca&iacute;do com facilidade ultimamente?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_3}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_4}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>3. Tem sentido medo de cair ultimamente?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_5}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_6}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>4. Evita andar ou deixa de fazer coisas devido ao medo de cair?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_7}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_8}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td colspan="3">Estados de Humor sociabilidade: disposi&ccedil;&atilde;o,
+		  alegria, energia, vontade etc...</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>Atual</td>
+		<td>Anterior</td>
+	      </tr>
+	      <tr>
+		<td>1. Tem sentido disposi&ccedil;&atilde;o, alegria, for&ccedil;a, energia
+		  para sair, conversar, passear ou realizar tarefas do dia-a-dia?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_9}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_10}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td height="23" colspan="3">Aspectos cognitivos: aten&ccedil;&atilde;o, concentra&ccedil;&atilde;o,
+		  racioc&iacute;nio e mem&oacute;ria e etc...</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>Atual</td>
+		<td>Anterior</td>
+	      </tr>
+	      <tr>
+		<td>1. Tem sentido dificuldade ou limita&ccedil;&atilde;o para pensar, lembrar,
+		  prestar aten&ccedil;&atilde;o, tomar decis&otilde;es ultimamente?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_11}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_12}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td colspan="3">Avalia&ccedil;&atilde;o comportamental</td>
+	      </tr>
+	      <tr>
+		<td colspan="3">Durante as &uacute;ltimas 4 semanas voc&ecirc; teve algum
+		  dos seguintes problemas com o seu trabalho ou outra atividade regular?</td>
+	      </tr>
+	      <tr>
+		<td>a. Voc&ecirc; diminuiu a quantidade de tempo que se dedicava ao trabalho
+		  ou a suas atividades?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_13}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_14}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>b. Realizou menos tarefas do que gostaria?</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_15}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_16}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>c. Trabalhou ou n&atilde;o fez suas atividades com tanto cuidado como
+		  geralmente faz? </td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_17}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${qualidade_18}"/>
+		</td>
+	      </tr>
+
+	</div>
+	<!-- -->
+
+	<div id="forca" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <tr>
+	    <td colspan="8">&nbsp;</td>
+	  </tr>
+	    <tr>
+	      <td><h3 class="form-signin-heading">9. Força</h3></td>
+	    </tr>
+	    <tr>
+		<td width="23%">&nbsp;</td>
+		<td width="24%">Inicial</td>
+		<td width="24%">Atual</td>
+		<td width="29%">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_1}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_2}"/>
+		</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>&nbsp;</td>
+		<td colspan="3">Cargas</td>
+	      </tr>
+	      <tr>
+		<td>Exerc&iacute;cio</td>
+		<td>Inicial</td>
+		<td>Atual</td>
+		<td>Limite</td>
+	      </tr>
+	      <tr>
+		<td>Press</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_3}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_4}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_5}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Remada</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_6}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_7}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_8}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Leg Press</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_9}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_10}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_11}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Flex&atilde;o G&ecirc;meos</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_12}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_13}"/>
+		</td>
+		<td>
+		  <p style="color: #f44336" th:text="${forca_14}"/>
+		</td>
+	      </tr>
+
+	</div>
+	<!-- -->
+
+
+	<div id="pressao" style="display: none" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <tr>
+	    <td colspan="8">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td><h3 class="form-signin-heading">10. Pressão Arterial</h3></td>
+	  </tr>
+	  <tr>
+	    <td width="32%">&nbsp;</td>
+	    <td width="34%">Inicial</td>
+	    <td width="34%">Final</td>
+	  </tr>
+	  <tr>
+	    <td>PA Sist&oacute;lica</td>
+	    <td>
+	      <p style="color: #f44336" th:text="${pressao_1}"/>
+	    </td>
+	    <td>
+	      <p style="color: #f44336" th:text="${pressao_2}"/>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>PA Diast&oacute;lica</td>
+	    <td>
+	      <p style="color: #f44336" th:text="${pressao_3}"/>
+	    </td>
+	    <td>
+	      <p style="color: #f44336" th:text="${pressao_4}"/>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>Coment&aacute;rios</td>
+	    <td colspan="2">
+	      <p style="color: #f44336" th:text="${pressao_5}"/>
+	    </td>
+	  </tr>
+
+	</div>
+	<!-- -->
+</form>
+
+<!-- Fim dos campos para exportacao -->
+<!-- -->
+<!-- -->
+</table>
+</div>
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="0">
+<!--	    <tr>
+	      <td>
+		<div id="finalizar" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		  <button class="button button_red" type="submit">Finalizar Cadastro</button>
+		</div>
+	      </td>
+	    </tr>
+-->
+	    <tr>
+	      <td width="5%">
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<footer class="footer">
+		  <div id="rodape" class="container">
+		    <p class="text-muted">&copy; Projeto Webgelatel - UTFPR 2020</p>
+		  </div>
+		</footer>
+	      </td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+
+</div>
+
+</div>
+
+	<!-- Chart.js -->
+	<script>
+		var MONTHS = ['1', '2', '3', '4','5'];
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: ['1', '2', '3','4','5'],
+			datasets: [{
+				label: 'Peso 1',
+				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.red,
+				borderWidth: 1,
+				data: []
+			}]
+
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Peso'
+					}
+				}
+			});
+
+		};
+
+
+		var colorNames = Object.keys(window.chartColors);
+		document.getElementById('update1').addEventListener('click', function() {
+
+
+						   //Essas linhas funcionam para 1 valor, mas quero para N valores
+						   //var x = 100;
+						   //x = document.getElementById("update2").value;
+						   //var index=0;
+						   //barChartData.datasets[index].data.push(x);
+
+   						   var ava_peso = document.getElementById("ava_peso").value;
+						   var x = ava_peso.split(" ");
+
+							    var month = MONTHS[barChartData.labels.length % MONTHS.length];
+							    //Anda com o campo
+							    barChartData.labels.push(month);
+
+							   //Se colocar esse trecho dentro do laco, gera tudo em 1 (um) soh campo
+							var colorName = colorNames[barChartData.datasets.length % colorNames.length];
+						       var dsColor = window.chartColors[colorName];
+							var newDataset = {
+							      label: 'Peso ' + barChartData.datasets.length,
+							       backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+							       borderColor: dsColor,
+							       borderWidth: 1,
+							       data: []
+							    };
+
+						   for (var index = 0; index < x.length; ++index) {
+
+									       //Funciona, mas so em 1 campo
+									       newDataset.data.push(x[index]);
+									       }
+								       barChartData.datasets.push(newDataset);
+									window.myBar.update();
+
+							    });
+
+
+	</script>
+<!-- -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

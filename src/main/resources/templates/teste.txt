@@ -1,0 +1,25 @@
+<form method="post">
+  <table id="tabela" class="table table-striped" width="53%" border="0">
+    <tr>
+      <td>
+        Número da Ficha:
+      </td>
+      <td>
+        <input type="number" id="ava_0" name="ava_0" class="form-control" th:value="${ava_0}" autofocus readonly>
+        <input type="hidden" id="ava_log" name="ava_log" value="LOG: " class="form-control" autofocus>
+      </td>
+
+      <td>
+        <button formaction="salvar" type="submit">Salvar</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="8">
+        <p style="color: #f44336" th:text="${ava_log}"/>
+      </td>
+    </tr>
+
+  </table>
+</form>
+<!-- Fim do Form -->

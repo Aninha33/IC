@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>Projeto Webgelatel 1.0</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+  </head>
+
+  <body>
+
+<!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
+<script type="text/javascript" src="/formden.js"></script>
+<!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="/bootstrap-iso.css" />
+
+<!--Font Awesome (added because you use icons in your prepend/append)-->
+<link rel="stylesheet" href="/font-awesome.min.css" />
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="/jquery-1.11.3.min.js"></script>
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="/bootstrap-datepicker3.css"/>
+
+<!-- Custom red buttom -->
+<style>
+  .button_red {
+
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  background-color: #e7e7e7; color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  .button_red:hover {
+  background-color: #f44336;
+  color: white;
+  }
+</style>
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="ava_1"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+      })
+
+    $(document).ready(function(){
+      var date_input=$('input[name="ava_2"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+
+
+</script>
+
+<!-- Export to Excel -->
+<script src="FileSaver.js"></script>
+<script src="tableexport.js"></script>
+<script>
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+
+  //Nao exibe o conteudo dos campos
+function fnExcelReport()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('tabela'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++)
+    {
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+//    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+  //  tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    //tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus();
+        sa=txtArea1.document.execCommand("SaveAs",true,"ficha_utfpr.xls");
+    }
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+    return (sa);
+}
+</script>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Projeto Webgelatel 1.0</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Configurações</a></li>
+            <li><a href="#">Perfil</a></li>
+            <li><a href="#">Ajuda</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Busca...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Visão Geral<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Relatórios</a></li>
+            <li><a href="#">Análises</a></li>
+            <li><button id="btnExport" onclick="tableToExcel('tabela', 'W3C Example Table')">Exportar para Excel</button>
+	    </li>
+          </ul>
+        </div>
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <img src="utfpr_logo.png"/>
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Avaliação</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarAvaliacao()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+        <div id="avaliacao" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar1" class="form-horizontal" method="post">
+
+	    <table id="tabela" class="table table-striped" width="53%" border="0">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <p th:text="${ava_1}" />
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <p th:text="${ava_2}"/>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <p th:text="${ava_3}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Nome:<span class="asteriskField">*</span></td>
+		<td colspan="8">
+		  <p th:text="${ava_4}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Objetivo:</td>
+		<td colspan="8">
+		  <p th:text="${ava_5}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Exercícios resistidos há (meses):</td>
+		<td>
+		  <p th:text="${ava_6}"/>
+		</td>
+		<td colspan="6">&nbsp;</td>
+	      </tr>
+	      <tr>
+		<td>Outras AF há (meses):</td>
+		<td>
+		  <p th:text="${ava_7}"/>
+		</td>
+		<td>Especificar:</td>
+		<td colspan="6">
+		  <p th:text="${ava_8}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Diagnóstico:</td>
+		<td colspan="8">
+		  <p th:text="${ava_9}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Medicação:</td>
+		<td colspan="8">
+		  <p th:text="${ava_10}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Peso (Kg):<span class="asteriskField">*</span></td>
+		<td>
+		  <p th:text="${ava_11}"/>
+		</td>
+		<td>Altura(m):<span class="asteriskField">*</span></td>
+		<td>
+		  <p th:text="${ava_12}"/>
+		</td>
+		<td>IMC:</td>
+		<td>
+		  <p th:text="${ava_13}"/>
+		</td>
+		<td>FC:</td>
+		<td colspan="2">
+		  <p th:text="${ava_14}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+<!--		  <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button> -->
+		</td>
+	      </tr>
+	    </table>
+	  </form>
+	</div>
+	<!-- -->
+
+	<div id="goniometria" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="18%"><h4>Articulação</h4></td>
+		<td width="10%"><h4>Movimento</h4></td>
+		<td width="11%"><h4>Direito</h4></td>
+		<td width="15%"><h4>Esquerdo</h4></td>
+		<td width="7%"><h4>Dor</h4></td>
+		<td width="17%"><h4>Anatômico</h4></td>
+		<td><h4>Local da Dor</h4></td>
+	      </tr>
+	      <tr>
+		<td rowspan="2">Ombro</td>
+		<td>Flexão</td>
+		<td>
+		  <p th:text="${gonio_1}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_2}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_3}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_4}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_5}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Rotação Externa</td>
+		<td>
+		  <p th:text="${gonio_6}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_7}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_8}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_9}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_10}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td rowspan="2">Quadril</td>
+		<td>Flexão</td>
+		<td>
+		  <p th:text="${gonio_11}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_12}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_13}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_14}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_15}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Rotação Externa</td>
+		<td>
+		  <p th:text="${gonio_16}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_17}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_18}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_19}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_20}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Joelho</td>
+		<td>Flexão</td>
+		<td>
+		  <p th:text="${gonio_21}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_22}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_23}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_24}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_25}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td rowspan="2">Tornozelo</td>
+		<td>Flexão Dorsal</td>
+		<td>
+		  <p th:text="${gonio_26}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_27}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_28}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_29}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_30}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Flexão Plantar</td>
+		<td>
+		  <p th:text="${gonio_31}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_32}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_33}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_34}"/>
+		</td>
+		<td>
+		  <p th:text="${gonio_35}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Observação:</td>
+		<td colspan="6">
+		  <p th:text="${gonio_36}"/>
+		</td>
+	      </tr>
+	      <tr>
+		<td>Sentar e levantar 30':</td>
+		<td colspan="6">
+		  <p th:text="${gonio_37}"/>
+		</td>
+	      </tr>
+	    </table>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Teste de Preensão Palmar</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarPreensao()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="preensao" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar3" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Composição Corporal</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarComposicao()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="composicao" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar4" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Avaliação de Dor</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarDor()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="dor" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar5" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Guralnick</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarGuralnick()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="guralnick" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar6" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Qualidade de Vida</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarQualidade()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="qualidade" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar7" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Força</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarForca()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="forca" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar8" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!-- -->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <table class="table table-striped" width="53%" border="1">
+	    <tr>
+	      <td><h3 class="form-signin-heading">Pressão Arterial</h3></td>
+	      <td width="5%"><button class="btn btn-lg btn-primary btn-block" onclick="ocultarPressao()">(+)</button></td>
+	    </tr>
+	  </table>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="pressao" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form action="gravar9" class="form-horizontal" method="post">
+
+	    <table class="table table-striped" width="53%" border="1">
+	      <tr>
+		<td width="20%">
+		  Data da Avaliação:
+		</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataAvaliacao" name="dataAvaliacao" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="10%">Data de Nascimento:</td>
+		<td width="20%">
+		  <div class="col-sm-25">
+		    <div class="input-group">
+		      <div class="input-group-addon">
+			<i class="fa fa-calendar">
+			</i>
+		      </div>
+		      <input class="form-control" id="dataNascimento" name="dataNascimento" placeholder="MM/DD/YYYY" type="text"/>
+		    </div>
+		  </div>
+		</td>
+		<td width="5%">Idade:</td>
+		<td colspan="4">
+		  <input type="number" id="idade" name="idade" class="form-control" placeholder="Idade" autofocus>
+		</td>
+	      </tr>
+	    </table>
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Gravar</button>
+	  </form>
+	</div>
+	<!-- -->
+
+	<!--
+	<div id="finalizar" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <form class="form-signin" action="finalizar" method="post" onsubmit="return validate()">
+	    <button class="button button_red" type="submit">Finalizar Cadastro</button>
+	  </form>
+	</div>
+	<!-- -->
+
+      </div>
+    </div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+	<!-- -->
+
+	<!-- -->
+	<div id="rodape" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <h5>&copy; Projeto Webgelatel - UTFPR 2020</h5>
+	</div>
+	<!-- -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

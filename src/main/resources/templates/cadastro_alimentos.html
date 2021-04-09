@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/favicon.ico">
+
+  <title>Cadastro Alimento</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/dashboard.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <script src="/assets/js/ie-emulation-modes-warning.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script src="/Chart.bundle.js"></script>
+  <script src="/utils.js"></script>
+</head>
+
+<body>
+
+  <!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
+  <script type="text/javascript" src="/formden.js"></script>
+  <!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
+  <link rel="stylesheet" href="/bootstrap-iso.css" />
+
+  <!--Font Awesome (added because you use icons in your prepend/append)-->
+  <link rel="stylesheet" href="/font-awesome.min.css" />
+
+  <!-- Inline CSS based on choices in "Settings" tab -->
+  <style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+  <!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+  <!-- Include jQuery -->
+  <script type="text/javascript" src="/jquery-1.11.3.min.js"></script>
+  <!-- Include Date Range Picker -->
+  <script type="text/javascript" src="/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="/bootstrap-datepicker3.css"/>
+
+  <!-- Custom red buttom -->
+  <style>
+  .button_red {
+
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    background-color: #e7e7e7; color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  .button_red:hover {
+    background-color: #f44336;
+    color: white;
+  }
+</style>
+
+<script>
+$(document).ready(function(){
+  var date_input=$('input[name="ava_1"]'); //our date input has the name "date"
+  var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+  var options={
+    format: 'dd/mm/yyyy',
+    container: container,
+    todayHighlight: true,
+    autoclose: true,
+  };
+  date_input.datepicker(options);
+})
+
+$(document).ready(function(){
+  var date_input=$('input[name="ava_2"]'); //our date input has the name "date"
+  var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+  var options={
+    format: 'dd/mm/yyyy',
+    container: container,
+    todayHighlight: true,
+    autoclose: true,
+  };
+  date_input.datepicker(options);
+})
+x
+</script>
+
+<!-- Export to Excel -->
+<script src="FileSaver.js"></script>
+<script src="tableexport.js"></script>
+<script>
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+  , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+  , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+  , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+
+//Nao exibe o conteudo dos campos
+function fnExcelReport()
+{
+  var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+  var textRange; var j=0;
+  tab = document.getElementById('tabela'); // id of table
+
+  for(j = 0 ; j < tab.rows.length ; j++)
+  {
+    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+    //tab_text=tab_text+"</tr>";
+  }
+
+  tab_text=tab_text+"</table>";
+  //    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+  //  tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+  //tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+  {
+    txtArea1.document.open("txt/html","replace");
+    txtArea1.document.write(tab_text);
+    txtArea1.document.close();
+    txtArea1.focus();
+    sa=txtArea1.document.execCommand("SaveAs",true,"ficha_utfpr.xls");
+  }
+  else                 //other browser not tested on IE 11
+  sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+  return (sa);
+}
+</script>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="Menu">Projeto Webgelatel</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <!-- <li>
+          <form method="post" class="navbar-form navbar-right">
+            		<button formaction="importar" class="btn btn-lg btn-primary btn-block" type="submit">Importar BD</button>-->
+          <!-- </form> -->
+        <!-- </li> -->
+        <!-- <li> -->
+          <!-- <form method="post" class="navbar-form navbar-right">
+            		<button formaction="excluirbase" class="btn btn-lg btn-primary btn-block" type="submit">Excluir BD</button>-->
+          <!-- </form> --> -->
+        <!-- </li> -->
+        <li><a href="#">Perfil</a></li>
+        <li><a href="#">Ajuda</a></li>
+      </ul>
+      <!-- <form method="post" class="navbar-form navbar-right"> -->
+        <!--            <input type="text" class="form-control" placeholder="Busca..."> -->
+        <!-- <button formaction="db" class="btn btn-lg btn-primary btn-block" type="submit">Exibir BD</button> -->
+      <!-- </form> -->
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="Menu">Menu<span class="sr-only">(current)</span></a></li>
+        <!--	    <li><a href="dashboard_lista">
+        <form method="post">
+        <button formaction="dashboard_lista" type="submit">Listar Fichas</button>
+      </form>
+    </a>
+  </li>-->
+  <li><a href="cadastro_cliente">
+    <form method="post">
+      <button formaction="cadastro_cliente" type="submit">Cadastro Cliente</button>
+    </form>
+  </a>
+</li>
+<!-- <li><a href="cadastro_cliente">
+  <form method="post">
+    <button formaction="cadastro_cliente" type="submit">Usuários</button>
+  </form>
+</a>
+</li> -->
+<!-- <li> -->
+  <!-- <form method="post"> -->
+    <!-- Redireciona para outro form para mostrar os campos a serem impressos.
+    Isso porque o gerador nessa pagina tambem gera os 'inputs', mas quero apenas os valores
+  -->
+  <!-- <button formaction="exportar" type="submit">Exportar</button>-->
+<!-- </form> -->
+<!-- </li> -->
+</ul>
+</div>
+</div>
+</div>
+
+<!-- -->
+<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<form>
+<h1> Cadastro de Alimento </h1>
+<div class="form-row">
+<form class="login100-form validate-form"> -->
+<!-- Alimento -->
+<!-- <h4> Nome do Alimento </h4> -->
+<!-- <div class="col-md-6 mb-3">
+<label for="validationServer01">Nome do Alimento</label>
+<input type="text" class="form-control is-valid" id="nome_alimento" placeholder="Nome" value="" required>
+<div class="valid-feedback">
+</div>
+</div> -->
+
+<!-- <div class="form-row">
+<div class="col-md-6 mb-3">
+<text class="col-form-label col-sm-5 pt-0"> Nome do Alimento</text> -->
+<!-- responsavel pela mensagem de erro do nome -->
+<!-- <div class="col-6">
+<div class="wrap-input100 validate-input" data-validate="Campo inválido">
+<input class="input100" type="text" name="Alimento">
+<span class="focus-input100" data-placeholder="Alimento"></span>
+</div>
+</div> -->
+
+<!-- <br> -->
+<!-- Datas -->
+<!-- Data Inicial-->
+<!-- <div class="col-2">
+<text class="col-form-label col-sm-5 pt-0"> Data Inicial do Alimento</text>
+<input class="input100" type="date" name="DataI" th:value="${validade_ali}">
+<span class="focus-input100" data-placeholder=""></span>
+<div class="valid-feedback">
+</div> -->
+<!-- Data Final -->
+<!-- <br>
+<div class="col-2">
+<text class="col-form-label col-sm-5 pt-0"> Data Vencimento</text>
+<input class="input100" type="date" name="validade_ali" th:value="${validade_ali}">
+<span class="focus-input100" data-placeholder=""></span>
+<div class="valid-feedback">
+</div>
+</div> -->
+<!-- Fim das datas -->
+<!-- <br> -->
+<!-- opções -->
+
+
+<!-- <br> -->
+<!-- <button class="btn btn-primary" type="submit">Salvar</button>
+</form>
+
+</div>
+-->
+
+<!-- Chart.js -->
+<script>
+var MONTHS = ['1', '2', '3', '4','5'];
+var color = Chart.helpers.color;
+var barChartData = {
+  labels: ['1', '2', '3','4','5'],
+  datasets: [{
+    label: 'Peso 1',
+    backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+    borderColor: window.chartColors.red,
+    borderWidth: 1,
+    data: []
+  }]
+
+};
+
+window.onload = function() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+  window.myBar = new Chart(ctx, {
+    type: 'bar',
+    data: barChartData,
+    options: {
+      responsive: true,
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Peso'
+      }
+    }
+  });
+
+};
+
+
+var colorNames = Object.keys(window.chartColors);
+document.getElementById('update1').addEventListener('click', function() {
+
+
+  //Essas linhas funcionam para 1 valor, mas quero para N valores
+  //var x = 100;
+  //x = document.getElementById("update2").value;
+  //var index=0;
+  //barChartData.datasets[index].data.push(x);
+
+  var ava_peso = document.getElementById("ava_peso").value;
+  var x = ava_peso.split(" ");
+
+  var month = MONTHS[barChartData.labels.length % MONTHS.length];
+  //Anda com o campo
+  barChartData.labels.push(month);
+
+  //Se colocar esse trecho dentro do laco, gera tudo em 1 (um) soh campo
+  var colorName = colorNames[barChartData.datasets.length % colorNames.length];
+  var dsColor = window.chartColors[colorName];
+  var newDataset = {
+    label: 'Peso ' + barChartData.datasets.length,
+    backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+    borderColor: dsColor,
+    borderWidth: 1,
+    data: []
+  };
+
+  for (var index = 0; index < x.length; ++index) {
+
+    //Funciona, mas so em 1 campo
+    newDataset.data.push(x[index]);
+  }
+  barChartData.datasets.push(newDataset);
+  window.myBar.update();
+
+});
+
+
+</script>
+<!-- -->
+
+<form method="post">
+  <div class="col-sm-9 col-sm-offset-3 col-md-4 col-md-offset-2 main">
+    <h1> Cadastro de Alimento </h1>
+
+    <!-- <div id="tabela" class="table table-striped" width="53%" border="0"> -->
+    <!-- <tr>
+    <td> -->
+    Nome do Alimento:
+    <input type="text" id="nome_ali" name="nome_ali" class="form-control" th:value="${nome_ali}" autofocus >
+    <br>
+    <!-- </td>
+  </tr>
+  <tr>
+  <td> -->
+  Data de Inicial:
+  <input type="date" id="entrada_ali" name="entrada_ali" class="form-control" th:value="${entrada_ali}" autofocus >
+  <br>
+  <!-- </td>
+</tr>
+<tr>
+<td> -->
+Data de Vencimento:
+<input type="date" id="validade_ali" name="validade_ali" class="form-control" th:value="${validade_ali}" autofocus >
+<br>
+<!-- </td>
+</tr>
+<tr>
+<td> -->
+prateleira:
+<input type="number" id="prateleira_ali" name="prateleira_ali" class="form-control" th:value="${prateleira_ali}" autofocus >
+<br>
+<!-- </td>
+</tr>
+<tr>
+<td> -->
+status:
+<input type="number" id="status_ali" name="status_ali" class="form-control" th:value="${status_ali}" autofocus >
+<br>
+<!-- </td>
+</tr>
+<tr>
+<td> -->
+Número da Geladeira:
+<input type="number" id="id_gel" name="id_gel" class="form-control" th:value="${id_gel}" autofocus >
+<br>
+<!-- </td>
+</tr>
+<tr>
+<td> -->
+<input type="hidden" id="ava_log" name="ava_log" value="LOG: " class="form-control" autofocus>
+<br>
+<!-- </td>
+</tr>
+<tr>
+<td> -->
+<button formaction="salvar" type="submit">Salvar</button>
+<!-- </td>
+</tr>
+
+<tr> -->
+<!-- <td colspan="8"> -->
+<p style="color: #f44336" th:text="${ava_log}"/>
+<!-- </td> -->
+<!-- </tr> -->
+
+</div>
+</div>
+</form>
+<!-- Fim do Form -->
+
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="/assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

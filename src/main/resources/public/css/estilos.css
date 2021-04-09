@@ -1,0 +1,212 @@
+body{
+  background-color: #FEFAEF;
+}
+
+.textoErro{
+  font-size: 1.5em;
+  text-align:center;
+  margin: auto;
+}
+
+.CorIcone{
+  color: #905d30;
+  /* marrom claro */
+  font-size: 2em;
+  margin: 0.5em;
+}
+
+
+.negrito{
+  font-weight: bold;
+}
+
+.redimensiona{
+  width: inherit;
+  height: auto;
+  max-height: 500px;
+  object-fit: fill;
+}
+
+h1, h2{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  text-align:center;
+}
+
+.z0{
+  z-index:0;
+}
+
+.botao{
+  background-color:#84572f;
+  color: #FFF;
+  z-index:0;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+[tabindex='-1']:focus {
+  outline: none; }
+
+  .md-button {
+    letter-spacing: 0.010em;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+  }
+  button.md-button::-moz-focus-inner {
+    border: 0;
+  }
+  button.md-button {
+    vertical-align: baseline;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 100%;
+  }
+  input.md-button[type="reset"],
+  input.md-button[type="submit"],
+  html input.md-button[type="button"],
+  button.md-button {
+    cursor: pointer;
+    -webkit-appearance: button;
+  }
+  input.md-button[type="reset"][disabled],
+  input.md-button[type="submit"][disabled],
+  html input.md-button[type="button"][disabled],
+  button.md-button[disabled] {
+    cursor: default;
+  }
+  .md-button {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    min-height: 36px;
+    min-width: 88px;
+    line-height: 36px;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 2px;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline: none;
+    border: 0;
+    padding: 0 6px;
+    margin: 6px 8px;
+    background: #84572f;
+    color: white;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    font-style: inherit;
+    font-variant: inherit;
+    font-family: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .md-button:focus {
+    outline: none;
+  }
+  .md-button:hover,
+  .md-button:focus {
+    text-decoration: none;
+  }
+  .md-button.md-cornered {
+    border-radius: 0;
+  }
+  .md-button.md-raised:not([disabled]) {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  }
+  .md-button:not([disabled]).md-raised:focus .md-button:not([disabled]).md-fab:focus {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  }
+  .md-button:not([disabled]).md-raised:active,
+  .md-button:not([disabled]).md-fab:active {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  }
+  .md-button:not([disabled]):hover {
+    background-color: #b99f89;
+  }
+  .md-button[disabled] {
+    color: rgba(0, 0, 0, 0.26);
+    background-color: transparent;
+  }
+  .md-button:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #555 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .5s, opacity 1s;
+  }
+  .md-button:active:after {
+    transform: scale(0, 0);
+    opacity: .2;
+    transition: 0s;
+  }
+  .md-button.md-fab {
+    line-height: 56px;
+    min-width: 0;
+    width: 56px;
+    height: 56px;
+    vertical-align: middle;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    border-radius: 50%;
+    background-clip: padding-box;
+    overflow: hidden;
+    -webkit-transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    -webkit-transition-property: background-color, box-shadow, -webkit-transform;
+    transition-property: background-color, box-shadow, -webkit-transform;
+    transition-property: background-color, box-shadow, transform;
+    transition-property: background-color, box-shadow, transform, -webkit-transform;
+  }
+  .md-button.md-fab.md-fab-bottom-right {
+    top: auto;
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    position: absolute;
+  }
+  .md-button.md-fab.md-fab-bottom-left {
+    top: auto;
+    right: auto;
+    bottom: 20px;
+    left: 20px;
+    position: absolute;
+  }
+  .md-button.md-fab.md-fab-top-right {
+    top: 20px;
+    right: 20px;
+    bottom: auto;
+    left: auto;
+    position: absolute;
+  }
+  .md-button.md-fab.md-fab-top-left {
+    top: 20px;
+    right: auto;
+    bottom: auto;
+    left: 20px;
+    position: absolute;
+  }
+  .md-button.md-fab.md-mini {
+    line-height: 40px;
+    width: 40px;
+    height: 40px;
+  }

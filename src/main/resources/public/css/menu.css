@@ -1,0 +1,61 @@
+.cor{
+  color: #fff!important;
+  background-color:#633d1c !important;
+}
+
+.textoMenu{
+  font-size: 1.4em;
+  /* text-align: center; */
+  text-indent: 1.5em;
+  margin: auto;
+  float: right;
+  max-width: 500px;
+  margin-left: 0px;
+  padding-top: 100px;
+  margin-right: 100px;
+}
+
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0px;
+  background-color: #905d30;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 10px;
+}
+.sidebar a {
+  padding: 18px 0px 8px 5px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #fff;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #633d1c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.w3-button:hover{
+  color:#fff!important;
+  background-color:#b99f89!important;
+  text-decoration: none;
+}
